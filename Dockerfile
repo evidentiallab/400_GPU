@@ -41,7 +41,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 USER $USERNAME
 COPY environment.yml ~/
 RUN mkdir -p ~/.ssh
-COPY id_rsa.pub ~/.ssh/authorized_keys
+COPY authorized_keys ~/.ssh/
 RUN chown utseus ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
 RUN --mount=type=cache,target=/opt/conda/pkgs conda env create -f \
     ~/environment.yml
