@@ -5,7 +5,6 @@ Load the image and run it:
 ```bash
 sudo docker load -i utseusgpu.tar
 sudo docker images
-sudo docker run --name <STUDENT-NAME> -p <PORT>:22 --security-opt=seccomp:unconfined -d utseusgpu
 sudo docker ps -a
 ```
 
@@ -31,5 +30,8 @@ https://www.geeksforgeeks.org/remove-all-containers-and-images-in-docker/
 https://code.visualstudio.com/remote/advancedcontainers/develop-remote-host
 
 ```bash
-sudo docker run --name <STUDENT-NAME> -p <PORT>:22 --security-opt=seccomp:unconfined -d utseusgpu
+sudo docker run --name <STUDENT-NAME> -p <PORT>:22 --gpus all --security-opt=seccomp:unconfined -d utseusgpu
 ```
+
+https://stackoverflow.com/questions/25185405/using-gpu-from-a-docker-container
+
