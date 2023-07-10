@@ -60,9 +60,9 @@ SHELL ["/bin/bash", "--login", "-c"]
 RUN conda init bash
 RUN echo "conda activate utseusgpu" >> /home/${USERNAME}/.bashrc
 SHELL ["/bin/bash", "--login", "-c"]
-RUN service ssh start
+RUN sudo systemctl start ssh
 EXPOSE 22
-CMD ["/usr/sbin/sshd","-D"]
+CMD ["sudo", "/usr/sbin/sshd","-D"]
 
 
 
