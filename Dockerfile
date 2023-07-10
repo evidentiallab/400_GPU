@@ -44,7 +44,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs conda env create -f \
     /home/${USERNAME}/environment.yml
 RUN mkdir -p /home/${USERNAME}/.ssh
 COPY authorized_keys /home/${USERNAME}/.ssh/
-RUN chown ${USERNAME} /home/${USERNAME}/.ssh/authorized_keys && chmod 600 /home/${USERNAME}/.ssh/authorized_keys
+RUN ${USER_UID}:chown ${USER_GID} /home/${USERNAME}/.ssh/authorized_keys && chmod 600 /home/${USERNAME}/.ssh/authorized_keys
 SHELL ["conda", "run", "-n", "utseusgpu", "/bin/bash", "-c"]
 RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
     sphinxcontrib-mermaid==0.7.1 \
