@@ -40,6 +40,9 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 USER $USERNAME
 COPY environment.yml ~/
+RUN mkdir -p ~/.ssh
+COPY id_rsa.pub ~/.ssh/authorized_keys
+RUN chown utseus ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
 RUN --mount=type=cache,target=/opt/conda/pkgs conda env create -f \
     ~/environment.yml
 SHELL ["conda", "run", "-n", "utseusgpu", "/bin/bash", "-c"]
@@ -57,6 +60,10 @@ SHELL ["/bin/bash", "--login", "-c"]
 RUN conda init bash
 RUN echo "conda activate utseusgpu" >> ~/.bashrc
 SHELL ["/bin/bash", "--login", "-c"]
+RUN service ssh start
+EXPOSE 22
+CMD ["/usr/sbin/sshd","-D"]
+
 
 
 
