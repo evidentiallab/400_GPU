@@ -39,12 +39,12 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 USER $USERNAME
-COPY environment.yml ~/
-RUN mkdir -p ~/.ssh
-COPY authorized_keys ~/.ssh/
-RUN chown utseus ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
+COPY environment.yml /home/${USERNAME}/
 RUN --mount=type=cache,target=/opt/conda/pkgs conda env create -f \
-    ~/environment.yml
+    /home/${USERNAME}/environment.yml
+RUN mkdir -p /home/${USERNAME}/.ssh
+COPY authorized_keys /home/${USERNAME}/.ssh/
+RUN chown ${USERNAME} /home/${USERNAME}/.ssh/authorized_keys && chmod 600 /home/${USERNAME}/.ssh/authorized_keys
 SHELL ["conda", "run", "-n", "utseusgpu", "/bin/bash", "-c"]
 RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
     sphinxcontrib-mermaid==0.7.1 \
@@ -58,7 +58,7 @@ RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
     xvfbwrapper
 SHELL ["/bin/bash", "--login", "-c"]
 RUN conda init bash
-RUN echo "conda activate utseusgpu" >> ~/.bashrc
+RUN echo "conda activate utseusgpu" >> /home/${USERNAME}/.bashrc
 SHELL ["/bin/bash", "--login", "-c"]
 RUN service ssh start
 EXPOSE 22
