@@ -28,7 +28,6 @@ RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
     libasound2 \
     zip \
     vim \
-    libnvvm \
     && apt clean && rm -rf /tmp/* /var/tmp/*
 RUN wget https://github.com/jgraph/drawio-desktop/releases/download/v13.0.3/draw.io-amd64-13.0.3.deb && \
     dpkg -i draw.io-amd64-13.0.3.deb && rm draw.io-amd64-13.0.3.deb
