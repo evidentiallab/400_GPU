@@ -41,6 +41,8 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 USER $USERNAME
 COPY environment.yml /home/${USERNAME}/
+COPY test-cnn.py /home/${USERNAME}/
+COPY test-gpu.py /home/${USERNAME}/
 RUN --mount=type=cache,target=/opt/conda/pkgs conda env create -f \
     /home/${USERNAME}/environment.yml
 RUN mkdir -p /home/${USERNAME}/.ssh
