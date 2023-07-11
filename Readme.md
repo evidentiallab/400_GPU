@@ -35,3 +35,7 @@ sudo docker run --name <STUDENT-NAME> -p <PORT>:22 --gpus all --security-opt=sec
 
 https://stackoverflow.com/questions/25185405/using-gpu-from-a-docker-container
 
+
+```
+ssh -i private_key -p <PORT> utseus@<IP-OF-GPU-SERVER>
+```
