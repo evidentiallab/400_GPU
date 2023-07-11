@@ -67,7 +67,6 @@ RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
 SHELL ["/bin/bash", "--login", "-c"]
 RUN conda init bash
 RUN echo "conda activate ${CONDA_EVN}" >> /home/${USERNAME}/.bashrc
-RUN conda install cudatoolkit
 SHELL ["/bin/bash", "--login", "-c"]
 RUN sudo ln -sf /bin/bash /bin/sh
 RUN sudo service ssh start
