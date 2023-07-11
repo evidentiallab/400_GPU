@@ -66,7 +66,11 @@ RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
     xvfbwrapper
 SHELL ["/bin/bash", "--login", "-c"]
 RUN conda init bash
+SHELL ["/bin/bash", "--login", "-c"]
+RUN conda install -y -c conda-forge cudatoolkit
 RUN echo "conda activate ${CONDA_EVN}" >> /home/${USERNAME}/.bashrc
+RUN echo "CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))" >> /home/${USERNAME}/.bashrc
+RUN echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib" >> /home/${USERNAME}/.bashrc
 SHELL ["/bin/bash", "--login", "-c"]
 RUN sudo ln -sf /bin/bash /bin/sh
 RUN sudo service ssh start
