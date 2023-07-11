@@ -30,6 +30,7 @@ RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
 RUN wget https://github.com/jgraph/drawio-desktop/releases/download/v13.0.3/draw.io-amd64-13.0.3.deb && \
     dpkg -i draw.io-amd64-13.0.3.deb && rm draw.io-amd64-13.0.3.deb
 ARG USERNAME=utseus
+ARG CONDA_EVN="utseusgpu"
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -45,7 +46,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs conda env create -f \
 RUN mkdir -p /home/${USERNAME}/.ssh
 COPY authorized_keys /home/${USERNAME}/.ssh/
 RUN sudo chown ${USER_UID}:${USER_GID} /home/${USERNAME}/.ssh/authorized_keys && chmod 600 /home/${USERNAME}/.ssh/authorized_keys
-SHELL ["conda", "run", "-n", "utseusgpu", "/bin/bash", "-c"]
+SHELL ["conda", "run", "-n", "${CONDA_EVN}", "/bin/bash", "-c"]
 RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
     sphinxcontrib-mermaid==0.7.1 \
     sphinxcontrib-wavedrom==3.0.4 \
@@ -58,7 +59,7 @@ RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
     xvfbwrapper
 SHELL ["/bin/bash", "--login", "-c"]
 RUN conda init bash
-RUN echo "conda activate utseusgpu" >> /home/${USERNAME}/.bashrc
+RUN echo "conda activate ${CONDA_EVN}" >> /home/${USERNAME}/.bashrc
 SHELL ["/bin/bash", "--login", "-c"]
 RUN sudo ln -sf /bin/bash /bin/sh
 RUN sudo service ssh start
