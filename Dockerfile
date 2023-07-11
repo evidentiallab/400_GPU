@@ -66,9 +66,7 @@ RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
     xvfbwrapper
 SHELL ["/bin/bash", "--login", "-c"]
 RUN conda init bash
-SHELL ["/bin/bash", "--login", "-c"]
 RUN conda install -y -c conda-forge cudatoolkit
-SHELL ["/bin/bash", "--login", "-c"]
 RUN pip install nvidia-cudnn-cu11
 RUN echo "conda activate ${CONDA_EVN}" >> /home/${USERNAME}/.bashrc
 RUN echo "CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))" >> /home/${USERNAME}/.bashrc
