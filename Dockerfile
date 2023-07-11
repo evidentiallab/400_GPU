@@ -1,4 +1,5 @@
-FROM continuumio/anaconda3:latest
+FROM nvidia/cuda:11.6.2-base-ubuntu20.04
+ENV DEBIAN_FRONTEND noninteractive
 RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
     --mount=target=/var/cache/apt,type=cache,sharing=locked \
     rm -f /etc/apt/apt.conf.d/docker-clean && \
@@ -29,6 +30,10 @@ RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
     && apt clean && rm -rf /tmp/* /var/tmp/*
 RUN wget https://github.com/jgraph/drawio-desktop/releases/download/v13.0.3/draw.io-amd64-13.0.3.deb && \
     dpkg -i draw.io-amd64-13.0.3.deb && rm draw.io-amd64-13.0.3.deb
+ENV CONDA_DIR /opt/conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda
+ENV PATH=$CONDA_DIR/bin:$PATH
 ARG USERNAME=utseus
 ARG CONDA_EVN=utseusgpu
 ARG USER_UID=1000
@@ -62,6 +67,7 @@ RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
 SHELL ["/bin/bash", "--login", "-c"]
 RUN conda init bash
 RUN echo "conda activate ${CONDA_EVN}" >> /home/${USERNAME}/.bashrc
+RUN conda install cudatoolkit
 SHELL ["/bin/bash", "--login", "-c"]
 RUN sudo ln -sf /bin/bash /bin/sh
 RUN sudo service ssh start
