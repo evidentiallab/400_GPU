@@ -16,3 +16,6 @@ sudo  echo '{ "features": { "buildkit": true } }' | sudo tee /etc/docker/daemon.
 sudo docker build -t utseusgpu .
 ```
 
+## docker gpu
+
+https://linnote.com/tensorflow-gpu-in-docker/
