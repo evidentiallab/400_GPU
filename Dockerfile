@@ -68,6 +68,8 @@ SHELL ["/bin/bash", "--login", "-c"]
 RUN conda init bash
 SHELL ["/bin/bash", "--login", "-c"]
 RUN conda install -y -c conda-forge cudatoolkit
+SHELL ["/bin/bash", "--login", "-c"]
+RUN pip install nvidia-cudnn-cu11
 RUN echo "conda activate ${CONDA_EVN}" >> /home/${USERNAME}/.bashrc
 RUN echo "CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))" >> /home/${USERNAME}/.bashrc
 RUN echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib" >> /home/${USERNAME}/.bashrc
