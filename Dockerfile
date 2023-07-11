@@ -28,6 +28,7 @@ RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
     libasound2 \
     zip \
     vim \
+    zsh \
     && apt clean && rm -rf /tmp/* /var/tmp/*
 RUN wget https://github.com/jgraph/drawio-desktop/releases/download/v13.0.3/draw.io-amd64-13.0.3.deb && \
     dpkg -i draw.io-amd64-13.0.3.deb && rm draw.io-amd64-13.0.3.deb
@@ -35,6 +36,9 @@ ENV CONDA_DIR /opt/conda
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda
 ENV PATH=$CONDA_DIR/bin:$PATH
+RUN conda install -y -c conda-forge cudatoolkit=11.8.0
+RUN PATH="$PATH:/usr/bin/zsh"
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ARG USERNAME=utseus
 ARG CONDA_EVN=utseusgpu
 ARG USER_UID=1000
@@ -64,7 +68,8 @@ RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
     sphinxcontrib-drawio==0.0.16 \
     git+https://github.com/innovationOUtside/ipython_magic_tikz.git \
     git+https://github.com/bonartm/sphinxcontrib-quizdown.git \
-    xvfbwrapper
+    xvfbwrapper \
+    nvidia-cudnn-cu11==8.6.0.163
 SHELL ["/bin/bash", "--login", "-c"]
 RUN conda init bash
 RUN echo "conda activate ${CONDA_EVN}" >> /home/${USERNAME}/.bashrc
