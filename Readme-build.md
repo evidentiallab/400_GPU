@@ -41,3 +41,4 @@ https://serverfault.com/questions/564445/how-can-i-forward-the-http-and-ssh-port
 
 https://serverfault.com/questions/564445/how-can-i-forward-the-http-and-ssh-port-to-my-internal-server-using-iptables
 
+https://phoenixnap.com/kb/iptables-port-forwarding
