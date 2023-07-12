@@ -1,4 +1,4 @@
-Host utseusgpu
-    HostName 58.199.168.215
+Host 58.199.168.215
+    HostName utseusgpu
     User utseus
     Port 20001
