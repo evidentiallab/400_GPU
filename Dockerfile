@@ -38,7 +38,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     /bin/bash ~/miniconda.sh -b -p /opt/conda
 ENV PATH=$CONDA_DIR/bin:$PATH
 RUN conda install -y -c conda-forge cudatoolkit=11.8.0
-RUN PATH=/usr/bin/bash:$PATH
+RUN PATH=/usr/bin/zsh:$PATH
 ARG USERNAME=utseus
 ARG CONDA_EVN=utseusgpu
 ARG USER_UID=1000
@@ -79,11 +79,9 @@ RUN echo 'CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cud
 RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib' >> /home/${USERNAME}/.zshrc
 RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib' >> /home/${USERNAME}/.bashrc
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/${USERNAME}/powerlevel10k
-RUN echo "source /home/${USERNAME}/powerlevel10k/powerlevel10k.zsh-theme" >> /home/${USERNAME}/.zshrc
 RUN rm /home/${USERNAME}/environment.yml
-RUN sudo chmod 666 /home/${USERNAME}/test-cnn.py
-RUN sudo chmod 666 /home/${USERNAME}/test-gpu.py
+RUN sudo chmod 777 /home/${USERNAME}/test-cnn.py
+RUN sudo chmod 777 /home/${USERNAME}/test-gpu.py
 SHELL ["/bin/bash", "--login", "-c"]
 RUN sudo ln -sf /bin/bash /bin/sh
 RUN sudo service ssh start
