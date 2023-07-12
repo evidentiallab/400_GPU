@@ -1,5 +1,5 @@
 Host gpu
     HostName 58.199.168.215
-    IdentityFile ~/docker_container_key
+    IdentityFile ~/.ssh/docker_container_key
     User utseus
     Port 20001
