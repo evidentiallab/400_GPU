@@ -80,8 +80,8 @@ RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH
 RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib' >> /home/${USERNAME}/.bashrc
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN rm /home/${USERNAME}/environment.yml
-RUN sudo chmod 777 /home/${USERNAME}/test-cnn.py
-RUN sudo chmod 777 /home/${USERNAME}/test-gpu.py
+RUN sudo chmod 666 /home/${USERNAME}/test-cnn.py
+RUN sudo chmod 666 /home/${USERNAME}/test-gpu.py
 SHELL ["/bin/bash", "--login", "-c"]
 RUN sudo ln -sf /bin/bash /bin/sh
 RUN sudo service ssh start

@@ -39,6 +39,10 @@ USER:
 ```
 ssh -i private_key -p <PORT> utseus@<IP-OF-GPU-SERVER>
 ```
+or
+```
+ssh gpu
+```
 
 ## port foward
 
