@@ -29,6 +29,7 @@ RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
     zip \
     vim \
     zsh \
+    fonts-powerline \
     && apt clean && rm -rf /tmp/* /var/tmp/*
 RUN wget https://github.com/jgraph/drawio-desktop/releases/download/v13.0.3/draw.io-amd64-13.0.3.deb && \
     dpkg -i draw.io-amd64-13.0.3.deb && rm draw.io-amd64-13.0.3.deb
@@ -37,8 +38,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     /bin/bash ~/miniconda.sh -b -p /opt/conda
 ENV PATH=$CONDA_DIR/bin:$PATH
 RUN conda install -y -c conda-forge cudatoolkit=11.8.0
-RUN PATH="$PATH:/usr/bin/zsh"
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+RUN PATH=/usr/bin/zsh:$PATH
 ARG USERNAME=utseus
 ARG CONDA_EVN=utseusgpu
 ARG USER_UID=1000
@@ -70,13 +70,20 @@ RUN python3 -m pip install jupyter-book jupyter_contrib_nbextensions==0.7.0 \
     git+https://github.com/bonartm/sphinxcontrib-quizdown.git \
     xvfbwrapper \
     nvidia-cudnn-cu11==8.6.0.163
-SHELL ["/bin/bash", "--login", "-c"]
-RUN conda init bash
+SHELL ["/bin/zsh", "--login", "-c"]
+RUN conda init zsh
+RUN echo "conda activate ${CONDA_EVN}" >> /home/${USERNAME}/.zshrc
 RUN echo "conda activate ${CONDA_EVN}" >> /home/${USERNAME}/.bashrc
+RUN echo 'CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))' >> /home/${USERNAME}/.zshrc
 RUN echo 'CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))' >> /home/${USERNAME}/.bashrc
+RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib' >> /home/${USERNAME}/.zshrc
 RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib' >> /home/${USERNAME}/.bashrc
-SHELL ["/bin/bash", "--login", "-c"]
-RUN sudo ln -sf /bin/bash /bin/sh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/${USERNAME}/powerlevel10k
+RUN echo "source /home/${USERNAME}/powerlevel10k/powerlevel10k.zsh-theme" >> /home/${USERNAME}/.zshrc
+SHELL ["/bin/zsh", "--login", "-c"]
+RUN sudo ln -sf /bin/zsh /bin/sh
+RUN sudo ln -sf /bin/zsh /bin/bash
 RUN sudo service ssh start
 EXPOSE 22
 CMD ["sudo", "/usr/sbin/sshd","-D"]
