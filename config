@@ -1,4 +1,5 @@
 Host 58.199.168.215
-    HostName utseusgpu
+    HostName 58.199.168.215
+    IdentityFile private_key
     User utseus
     Port 20001
