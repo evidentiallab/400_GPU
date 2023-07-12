@@ -1,5 +1,5 @@
 Host 58.199.168.215
     HostName 58.199.168.215
-    IdentityFile private_key
+    IdentityFile C:\Users\lunde\400_GPU\private_key
     User utseus
     Port 20001
