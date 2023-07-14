@@ -47,6 +47,32 @@ http://43.156.84.104:8010/
 
 ```shell
 sudo vi tunnel 
+```
+
+add:
+```shell
+server {
+    listen 8010;
+    location / {
+         proxy_pass http://127.0.0.1:8009;
+    }
+}
+
+server {
+    listen 9010;
+    location / {
+         proxy_pass http://127.0.0.1:9009;
+    }
+}
+```
+
+then
+
+```shell
 sudo nginx -s reload
 ```
+
+## Ref
+
+https://serverfault.com/questions/655067/is-it-possible-to-make-nginx-listen-to-different-ports
 
