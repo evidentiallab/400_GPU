@@ -59,3 +59,9 @@ https://unix.stackexchange.com/questions/10428/simple-way-to-create-a-tunnel-fro
 
 
 
+Maybe:
+```shell
+$ sudo vi /etc/ssh/sshd_config
+   Port 22
+   Port 8888
+```
