@@ -41,3 +41,19 @@ sudo vi tunnel
 sudo nginx -s reload
 ```
 
+
+
+## Ref
+
+https://serverfault.com/questions/655067/is-it-possible-to-make-nginx-listen-to-different-ports
+
+
+
+## TODO:
+
+add `-g`?
+
+https://unix.stackexchange.com/questions/10428/simple-way-to-create-a-tunnel-from-one-local-port-to-another
+
+
+

@@ -72,7 +72,3 @@ then
 sudo nginx -s reload
 ```
 
-## Ref
-
-https://serverfault.com/questions/655067/is-it-possible-to-make-nginx-listen-to-different-ports
-
