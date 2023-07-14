@@ -45,6 +45,8 @@ sudo nginx -s reload
 
 ## Ref
 
+https://medium.com/the-software-reliever/expose-localhost-to-the-public-www-with-a-vps-nginx-and-ssh-tunneling-daefc0275757
+
 https://serverfault.com/questions/655067/is-it-possible-to-make-nginx-listen-to-different-ports
 
 
