@@ -4,7 +4,7 @@
 ./script_sshd.sh &
 
 # Start the second process
-./script_frp.sh &
+./script_frpc.sh &
 
 # Wait for any process to exit
 wait -n

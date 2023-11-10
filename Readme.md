@@ -39,6 +39,7 @@ USER:
 ```
 ssh -i private_key -p <PORT> utseus@<IP-OF-GPU-SERVER> 
 ```
+or
 ```
 ssh -i private_key -p <PORT> utseus@<IP-OF-FRP-SERVER> 
 ```
