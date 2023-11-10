@@ -92,5 +92,10 @@ RUN sudo service ssh start
 EXPOSE 22
 EXPOSE 7000
 EXPOSE 6000
-CMD ["sudo", "/usr/sbin/sshd","-D"]
-https://docs.docker.com/config/containers/multi-service_container/
+COPY script_sshd.sh script_sshd.sh
+COPY script_frp.sh script_frp.sh
+COPY script_wrapper.sh script_wrapper.sh
+RUN sudo chmod 777 script_sshd.sh
+RUN sudo chmod 777 script_frp.sh
+RUN sudo chmod 777 script_wrapper.sh
+CMD ./script_wrapper.sh

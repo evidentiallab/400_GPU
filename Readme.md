@@ -29,7 +29,7 @@ https://code.visualstudio.com/remote/advancedcontainers/develop-remote-host
 
 ADMIN:
 ```bash
-sudo docker run --name <STUDENT-NAME> -p <PORT>:22 --gpus all --security-opt=seccomp:unconfined -d utseusgpu
+sudo docker run --name <STUDENT-NAME> -p <PORT>:22 -p <PORT-NOTUSED>:7000 -p <PORT>:6000 --gpus all --security-opt=seccomp:unconfined -d utseusgpu
 ```
 
 https://stackoverflow.com/questions/25185405/using-gpu-from-a-docker-container
@@ -37,12 +37,16 @@ https://stackoverflow.com/questions/25185405/using-gpu-from-a-docker-container
 
 USER:
 ```
-ssh -i private_key -p <PORT> utseus@<IP-OF-GPU-SERVER>
+ssh -i private_key -p <PORT> utseus@<IP-OF-GPU-SERVER> 
+```
+```
+ssh -i private_key -p <PORT> utseus@<IP-OF-FRP-SERVER> 
 ```
 or
 ```
 ssh gpu
 ```
+
 
 # FOR BUILDING IMAGE ONLY
 
@@ -90,3 +94,6 @@ https://hub.docker.com/r/nvidia/cuda/tags?page=1
 
 https://docs.portainer.io/start/install-ce/server/docker/linux
 
+## multi-service container
+
+https://docs.docker.com/config/containers/multi-service_container/
