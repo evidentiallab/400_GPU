@@ -90,4 +90,7 @@ SHELL ["/bin/bash", "--login", "-c"]
 RUN sudo ln -sf /bin/bash /bin/sh
 RUN sudo service ssh start
 EXPOSE 22
+EXPOSE 7000
+EXPOSE 6000
 CMD ["sudo", "/usr/sbin/sshd","-D"]
+https://docs.docker.com/config/containers/multi-service_container/
